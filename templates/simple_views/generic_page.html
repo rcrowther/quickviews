@@ -1,0 +1,19 @@
+{% extends "simple_views/base.html" %}
+{% load i18n static %}
+
+{% block html_title %} {{ title|striptags }} {% endblock %}
+{% block head_tags %}
+{% endblock %}
+
+{% block title %} {{ title }} {% endblock %}
+{% block content %}
+    {{ content }}
+{% endblock %}
+
+{% block footer %}
+    {% if pagination_nav %}
+    <ul class="pagenav">
+      {{ pagination_nav }}
+    </ul>
+    {% endif %}
+{% endblock %}

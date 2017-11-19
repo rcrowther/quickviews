@@ -1,0 +1,38 @@
+
+
+table.detail-list {
+width: 100%;
+border-color: #ccc;
+border-collapse: collapse;
+margin-top: 20px;
+font-size:13px;
+}
+
+.detail-list thead {
+font-size: 11px;
+text-align: left;
+background-color: #f6f6f6;
+border-top: 1px solid #eee;
+border-bottom: 1px solid #eee;
+}
+
+
+.detail-list thead th {
+font-weight: 600;
+text-transform: uppercase;
+color: #666;
+}
+
+.detail-list tr > th, .detail-list tr > td {
+padding: 8px 10px;
+}
+
+.detail-list tr {
+overflow: hidden;
+padding: 10px;
+border-bottom: 1px solid #f6f6f6;
+}
+
+.detail-list tr:nth-child(even) {
+background: #fcfcfc;
+}

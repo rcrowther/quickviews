@@ -1,0 +1,17 @@
+
+ul.detail {
+list-style-type: none;
+font-size:13px;
+margin-top: 20px;
+border:1px solid #ccc;
+}
+
+.detail li {
+overflow: hidden;
+padding: 10px;
+border-bottom: 1px solid #f6f6f6;
+}
+
+.detail li:nth-child(even) {
+background: #fcfcfc;
+}

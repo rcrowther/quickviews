@@ -1,0 +1,28 @@
+{% extends "simple_views/base.html" %}
+
+
+{% block html_title %} {{ title|striptags }} {% endblock %}
+
+{% block title %} {{ title }} {% endblock %}
+
+{% block head_tags %}
+<script type="text/javascript" src="/static/admin/js/vendor/jquery/jquery.js"></script>
+<script type="text/javascript" src="/static/admin/js/urlify.js"></script>
+<script type="text/javascript" src="/static/simple_views/js/sluginput.js"></script>
+{% endblock %}
+
+{% block content %}
+  <form id="generic-form" action="{{ submit_url }}" method="post">
+    {% csrf_token %}
+
+    <ul class="admin-list">
+      {{ form.as_ul }}
+    </ul>
+    
+    <ul class="actions">
+      {% for action in actions %}
+        {{ action }}
+      {% endfor %}
+    </ul>
+  </form>
+{% endblock %}
