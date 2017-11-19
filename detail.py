@@ -278,7 +278,7 @@ class DetailBuilder(DetailBase, metaclass=DeclarativeFieldsMetaclass):
 
 
 class DetailBuilderView(DetailBuilder, SingleObjectContextMixin, TemplateView):
-    template_name = 'simple_views/generic_page.html'
+    template_name = 'quickviews/generic_page.html'
 
     def get_context_data(self, **kwargs):
         kwargs.update({
@@ -292,7 +292,7 @@ class DetailBuilderView(DetailBuilder, SingleObjectContextMixin, TemplateView):
         
     class Media:
       css = {
-          'all': ('simple_views/css/list.css',)
+          'all': ('quickviews/css/list.css',)
           }
 
 
@@ -363,7 +363,7 @@ class ModelDetailBuilder(ModelDetailBase, metaclass=DeclarativeFieldsMetaclass):
 
 
 class ModelDetailBuilderView(ModelDetailBuilder, SingleObjectContextMixin, TemplateView):
-    template_name = 'simple_views/generic_page.html'
+    template_name = 'quickviews/generic_page.html'
 
     def get_context_data(self, **kwargs):
         self.object = self.get_object()
@@ -378,5 +378,5 @@ class ModelDetailBuilderView(ModelDetailBuilder, SingleObjectContextMixin, Templ
         
     class Media:
         css = {
-            'all': ('simple_views/css/list.css',)
+            'all': ('quickviews/css/list.css',)
             }

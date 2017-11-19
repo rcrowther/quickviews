@@ -14,7 +14,7 @@ Finally, if you want custom views with special templates and media additions, yo
 Alternatives
 ------------
 django.views.(FormView, CreateView, UpdateView, DeleteView). 
-    These are near the Simple Views, and the Django way. But they have no default rendering, the code they generate is larger than hand-written view handling,
+    These are near the QuickViews, and the Django way. But they have no default rendering, the code they generate is larger than hand-written view handling,
     and their control flow needs a leap of conception.
 
 django.admin.views
@@ -112,7 +112,7 @@ ModelCreate
 +++++++++++
 Use auto-form generation for models, but override the success method for a custom save, ::
 
-    from simple_views import views
+    from quickviews import views
 
     class FireworkCreate(views.ModelUpdate):
         model = Firework
@@ -130,7 +130,7 @@ ModelUpdate
 +++++++++++
 Or provide a custom form, but lean on the default success method for Model-based views, ::
 
-    from simple_views import views
+    from quickviews import views
 
     class FireworkUpdate(views.ModelUpdate):
         model = Firework
@@ -145,7 +145,7 @@ ModelDelete
 +++++++++++
 Deleting, we always need a delete, ::
 
-    from simple_views import views
+    from quickviews import views
 
     class FireworkDelete(views.ModelDelete):
         model = Firework

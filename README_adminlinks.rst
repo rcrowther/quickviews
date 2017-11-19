@@ -24,7 +24,7 @@ Quickstart
 ----------
 Assume you have a view called 'search'. In 'admin.py' add,
 
-    from simple_views import adminlinks
+    from quickviews import adminlinks
     from . import views
         
     adminlinks.register("Search", views.search)

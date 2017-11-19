@@ -27,7 +27,7 @@ Quickstart
 ----------
 Pick a model, import the code, set a URL, ::
 
-    from simple_views import ModelListBuilderView
+    from quickviews import ModelListBuilderView
 
     url(r'^list/$', list.ModelListBuilderView.as_view(model=Fireworks, use_fields=['title', 'description', 'effect']))
 
@@ -45,7 +45,7 @@ Works from any dict or queryset with repeated records. The data can be in the fo
 
 First the builder needs a cell definition. See the seperate README for more details. Assume we have this e.g. ::
     
-    from simple_views import ListBuilder
+    from quickviews import ListBuilder
     from firework.models import *
     
     class FireworkList(ListBuilder):

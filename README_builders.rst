@@ -111,7 +111,7 @@ API
 ~~~
 The builders have an API similar to django.Form. Declare cells on a class, ::
     
-    from simple_views import ListBuilder
+    from quickviews import ListBuilder
     from firework.models import *
     
     class FireworkList(ListBuilder):
@@ -130,7 +130,7 @@ This is slightly different to a form. A form expects the init() values to be spl
 
 Or define the cells using init(), though this method gets bulky quickly, ::
 
-    from simple_views import ListBuilder
+    from quickviews import ListBuilder
     from firework.models import *
     
     fireworkList = ListBuilder( cells={
@@ -148,7 +148,7 @@ Declaring renderers makes them active. To some extent, order of declaration is p
 
 So this will display nothing, ::
 
-    from simple_views.detail import ModelDetailBuilderView
+    from quickviews.detail import ModelDetailBuilderView
 
     url(r'^(?P<firework_pk>[0-9]+)/$',
     ModelDetailBuilderView.as_view(model=Paper, url_pk_arg='firework_pk'),

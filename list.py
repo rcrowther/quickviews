@@ -418,7 +418,7 @@ class ListBuilder(ListBase, metaclass=DeclarativeFieldsMetaclass):
 
 
 class ListBuilderView(ListBuilder, TemplateView):
-    template_name = 'simple_views/generic_page.html'
+    template_name = 'quickviews/generic_page.html'
 
     def get_context_data(self, **kwargs):
         #? add pagenumber from kwargs
@@ -434,7 +434,7 @@ class ListBuilderView(ListBuilder, TemplateView):
 
     class Media:
         css = {
-            'all': ('simple_views/css/table.css',)
+            'all': ('quickviews/css/table.css',)
             }
         
         
@@ -540,7 +540,7 @@ class ModelListBuilder(ModelListBase, metaclass=DeclarativeFieldsMetaclass):
 
 
 class ModelListBuilderView(ModelListBuilder, TemplateView):
-    template_name = 'simple_views/generic_page.html'
+    template_name = 'quickviews/generic_page.html'
     rows_per_page = 25
         
     def get_context_data(self, **kwargs):
@@ -561,5 +561,5 @@ class ModelListBuilderView(ModelListBuilder, TemplateView):
 
     class Media:
         css = {
-            'all': ('simple_views/css/table.css',)
+            'all': ('quickviews/css/table.css',)
             }

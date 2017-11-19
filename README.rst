@@ -1,22 +1,22 @@
-Simple Views
+QuickViews
 ============
 It was like this in the old days. When you had food and had to walk to the shops. Views with poor configuration and you can take the code in with a glance. But the same class-based API as modern Views.
 
-Simple Views contains views for rendering forms, lists, and models. All views have default rendering through stock templates  and CSS.
+QuickViews contains views for rendering forms, lists, and models. All views have default rendering through stock templates  and CSS.
 
 
 When to use this application
 ----------------------------
 Any of the following,
 
-- You want to see forms, lists, or models straight away. You can figure out details later.
+- You want to see and use forms, lists, or models straight away (you will figure out details later).
 - You're happy with stock HTML. Let the CSS do the work.
 - You don't want to read through the many Admin and Django views trying to figure out if the code can do what you want.
 - You have a form which is not part of Admin provision, yet you want it in Admin (e.g. a search). 
 
-(there are some other uses. In some circumstances, you may also consider this app when you know for sure you will be writing fully custom templates and CSS on a View)
+(there are some other uses. In some circumstances, you may also consider this app when you know for sure you will be writing custom templates and CSS on a View)
 
-The documentation contains a wider discussion on these features.
+The documentation contains a wider discussion of these features.
 
 
 Limitations
@@ -41,11 +41,11 @@ Non-Model and Model versions of most views, etc.
 All views render immediately through default templates and CSS.
 
 - Close to Django
-Though it is impossible to reconcile all Django APIs, Simple Views code has made progress. 
+Though it is impossible to reconcile all Django APIs, QuickView code has made progress. 
 
 
 
-How Simple Views work
+How QuickViews work
 ---------------------
 An approach to the API is emerging:
 

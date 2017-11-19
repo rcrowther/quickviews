@@ -25,7 +25,7 @@ If you do this on a form view, all the action bttons will vanish. They can be re
 
 To add buttons? To add a 'Cancel' button to a 'delete' form is user-friendly. This illustrates how to override get_context_data() for the Simple View templates. Add this to a delete form view, ::
 
-    from simple_views import views, inline_templates
+    from quickviews import views, inline_templates
 
     class FireworkDelete(views.ModelDeleteView):
         ...
@@ -51,7 +51,7 @@ Change CSS (and Javascript)
 -----------------------------
 You'd like the view to be styled in another way, or would like/need Javascript additions.
 
-All Simple Views implement Django's MediaMixin. So to provide your own CSS, override, ::
+All QuickViews implement Django's MediaMixin. So to provide your own CSS, override, ::
 
 
 To add to the current CSS, ::

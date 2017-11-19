@@ -20,7 +20,7 @@ Quickstart
 ----------
 Pick a model, import the code, set a URL, ::
 
-    from simple_views import ModelListView
+    from quickviews import ModelListView
 
     url(r'^list/$', list.ModelListView.as_view(model=Fireworks, use_fields=['title', 'description', 'effect']))
 
@@ -38,7 +38,7 @@ Works from any dict or Model instance.
 
 First the builder needs a cell definition. See the seperate README for more details. Assume we have this e.g. ::
     
-    from simple_views import DetailBuilder
+    from quickviews import DetailBuilder
     from firework.models import *
     
     class FireworkDetail(DetailBuilder):

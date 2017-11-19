@@ -1,4 +1,4 @@
-{% extends "simple_views/base.html" %}
+{% extends "quickviews/base.html" %}
 
 
 {% block html_title %} {{ title|striptags }} {% endblock %}
@@ -6,13 +6,15 @@
 {% block title %} {{ title }} {% endblock %}
 
 {% block head_tags %}
+<!--
 <script type="text/javascript" src="/static/admin/js/vendor/jquery/jquery.js"></script>
 <script type="text/javascript" src="/static/admin/js/urlify.js"></script>
-<script type="text/javascript" src="/static/simple_views/js/sluginput.js"></script>
+<script type="text/javascript" src="/static/quickviews/js/sluginput.js"></script>
+-->
 {% endblock %}
 
 {% block content %}
-  <form id="generic-form" action="{{ submit_url }}" method="post">
+  <form id="generic-form" action="{{ submit_url }}" method="get">
     {% csrf_token %}
 
     <ul class="admin-list">
@@ -25,4 +27,11 @@
       {% endfor %}
     </ul>
   </form>
+
+  {% if data_display %}
+  <div class="data-display">
+    {{ data_display }}
+  </div>
+  {% endif %}
+
 {% endblock %}

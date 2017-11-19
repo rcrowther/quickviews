@@ -85,7 +85,7 @@ class GetView(generic.base.TemplateView):
     - has_changed
     
     '''
-    template_name = 'simple_views/generic_get_form.html'
+    template_name = 'quickviews/generic_get_form.html'
     initial = {}
     form_class = None
     prefix = None
@@ -369,7 +369,7 @@ class BaseCreateView(ProcessFormView, generic.detail.SingleObjectTemplateRespons
     Base view for creating an new object instance.
     """
     template_name_suffix = '_create_form'
-    template_name = 'simple_views/generic_form.html'
+    template_name = 'quickviews/generic_form.html'
    
     def get(self, request, *args, **kwargs):
         self.object = None
@@ -423,7 +423,7 @@ class BaseUpdateView(ProcessFormView, generic.detail.SingleObjectTemplateRespons
     Base view for updating an existing object.
     """
     template_name_suffix = '_update_form'
-    template_name = 'simple_views/generic_form.html'
+    template_name = 'quickviews/generic_form.html'
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -510,7 +510,7 @@ class BaseConfirmView(ProcessConfirmView, generic.detail.SingleObjectTemplateRes
     Base view for updating an existing object.
     """
     template_name_suffix = '_confirm_form'
-    template_name = 'simple_views/confirm_form.html'
+    template_name = 'quickviews/generic_confirm_form.html'
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
