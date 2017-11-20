@@ -61,11 +61,11 @@ Overall guide
 
 Install
 ~~~~~~~
-In settings.py,
+In settings.py, ::
 
-INSTALLED_APPS = [
-    'quickviews.apps.QuickViewsConfig',
-]
+    INSTALLED_APPS = [
+        'quickviews.apps.QuickViewsConfig',
+    ]
 
 Quickviews needs no other setup.
 
@@ -78,7 +78,7 @@ adminlinks
     Put a custom link under permissions into the main AdminView. Freaky, but seems to live here.
     
 forms
-    Set of defaulted form views for use with Forms and ModelForms
+    Defaulted views for use with Forms and ModelForms
 
 list views and paginators
     Contains a ListBuilder which works from a Django database query. And defaulted views.

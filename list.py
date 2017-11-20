@@ -457,6 +457,7 @@ class ModelListBase(ListBase):
 
     def __init__(self,  
         model=None,
+        url_filter_arg=None,
         list=None, list_ordering=None, use_fields=None,
         allow_empty=False, rows_per_page = None,
         list_model_name=None, list_selection_name=None
@@ -465,6 +466,11 @@ class ModelListBase(ListBase):
             self.model = model
         if (not self.model):
             raise AttributeError("ModelListBuilder must be called with a coder-defined attribute 'model'.")
+        if (url_filter_arg):
+            self.url_filter_arg = url_filter_arg
+        if (not isinstance(self.url_filter_arg, dict)):
+            raise AttributeError("ModelListBuilder.url_filter_arg must be a dict() of Django query attributes.")
+
         super().__init__(
             list=list, list_ordering=list_ordering, use_fields=use_fields, 
             allow_empty=allow_empty, rows_per_page=rows_per_page, 

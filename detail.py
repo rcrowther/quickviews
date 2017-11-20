@@ -176,8 +176,8 @@ class DetailBase(SingleObjectMixin):
         self.cells = copy.deepcopy(self.base_fields)
         
         # append init-supplied fields
-        if (cells):
-           self.cells = self.cells + cells
+        #if (cells):
+        #   self.cells = self.cells + cells
            
         # order by use_fields
         # (the model version both orders and retrieves defaulted fields)
@@ -316,6 +316,7 @@ class ModelDetailBase(SingleModelObjectMixin, DetailBase):
 
     def __init__(self,
         model= None,
+        url_pk_arg=None, object_name_field_key=None,
         object=None, use_fields=None,
         allow_empty=False,
         object_model_name = None
@@ -324,10 +325,12 @@ class ModelDetailBase(SingleModelObjectMixin, DetailBase):
             self.model = model
         if (not self.model):
             raise AttributeError("ModelDetail must be called with a coder-defined attribute 'model'.")
-            
+
         # can't test here, get_data() may be overridden
         if (url_pk_arg):
             self.url_pk_arg = url_pk_arg
+        if (object_name_field_key):
+            self.object_name_field_key = object_name_field_key
         super().__init__(
             object=object, use_fields=use_fields,
             allow_empty=allow_empty,
