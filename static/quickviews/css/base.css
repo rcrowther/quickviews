@@ -261,6 +261,7 @@ display:inline-block;
 
 .pagenav a {
 color: #447e9b;
+padding:4px 6px;
 }
 
 .pagenav a.active {

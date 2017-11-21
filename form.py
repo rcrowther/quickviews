@@ -33,9 +33,9 @@ from .detail import (
     SingleModelObjectContextMixin
     )
     
-
-#! the context here is layered. How can we drop admin context, but keep
-# the rest? add_default_context?
+#! transactions
+#? the context here is layered. How can we drop admin context, but keep
+# the rest? add_default_context? is it worth doing?
 # + modified with 
 # querysets replaced with simple get_object()
 # success_action/fail_action hooks

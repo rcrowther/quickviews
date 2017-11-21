@@ -141,7 +141,7 @@ class NumericCell(CellRenderer):
         Return a value as it should appear when rendered in a template.
         """
         value = super().format_value(value)
-        return self.format_str(value)
+        return self.format_str.format(value)
         
         
         
@@ -251,6 +251,9 @@ def default_cell_from_model_field(field, abbreviated=False):
         elif(
             isinstance(field, fields.URLField)
             or isinstance(field, fields.UUIDField)
+            # NB: Images are not shown as default as an image.
+            # Ttheymay be any size. They are shown as their source link.
+            or isinstance(field, fields.files.ImageField)
             ):
             return TextCell(link='{value}')
         elif(            
@@ -264,10 +267,6 @@ def default_cell_from_model_field(field, abbreviated=False):
             or isinstance(field, fields.SmallIntegerField)
             ):
             return NumericCell()
-        elif(
-            isinstance(field, fields.files.ImageField)
-        ):
-            return ImageCell()
         elif(
             isinstance(field, fields.DateField)
             or isinstance(field, fields.DateTimeField)

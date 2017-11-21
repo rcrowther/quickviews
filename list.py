@@ -15,8 +15,7 @@ from .paginators import (InvalidPage, PrevNextPaginator, GroupPaginator)
 
 
 
-#! rename as 'quickviews'
-#? allow_empty
+#? allow_empty only for renderers
 #! section, not article, HTML
 
 def space_and_lower(value):
