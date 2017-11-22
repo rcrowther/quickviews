@@ -141,7 +141,7 @@ class ListBase():
     paginator_url = '/'
     
     
-    def __init__(self, 
+    def __init__(self,
         list=None, list_ordering=None, use_fields=None,
         allow_empty=False, rows_per_page=None,
         list_model_name=None, list_selection_name=None

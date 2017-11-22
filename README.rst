@@ -45,15 +45,24 @@ Though it is impossible to reconcile all Django APIs, QuickView code has made pr
 
 
 
-How QuickViews work
----------------------
-An approach to the API is emerging:
 
-Django's sometimes variable approach to setting parameters has been clarified. All parameters are available as attributes on a View class, for overriding by sub-classing. A set of parameters is included in some __init__()s, mainly for the standalone use in URLs and by builders.
+Screenshots
+-----------
+.. figure:: https://raw.githubusercontent.com/rcrowther/quickviews/master/text/images/objectview.png
+   :width: 100
+   :alt: objectview screenshot
+   :align: center
 
-The builders have render methods. These are named as_table() etc. for substancial variations. The __str__() method returns a default render method (Django's Form class uses this approach). The auto-generating Views inherit these builders directly. If extensive or detailed or dedicated customisation is needed, the Views can be subclassed. But, if not, build parameters can be set on URL construction. e.g. ::
- 
-     ???
+   One line in a url.py file
+
+.. figure:: https://raw.githubusercontent.com/rcrowther/quickviews/master/text/images/listview.png
+   :width: 100
+   :alt: objectview screenshot
+   :align: center
+
+   Listview, reduced number of rows, plus group paginator
+
+
  
  
 Overall guide
@@ -69,6 +78,14 @@ In settings.py, ::
 
 Quickviews needs no other setup.
 
+Hints
+~~~~~
+An approach to the API is emerging:
+
+Django's sometimes variable approach to setting parameters has been clarified. All parameters are available as attributes on a View class, for overriding by sub-classing. A set of parameters is included in some __init__()s, mainly for the standalone use in URLs and by builders.
+
+The builders have render methods. These are named as_table() etc. for substancial variations. The __str__() method returns a default render method (Django's Form class uses this approach). The auto-generating Views inherit these builders directly. If extensive or detailed or dedicated customisation is needed, the Views can be subclassed. But, if not, build parameters can be set on URL construction. e.g. ::
+ 
 
 Use
 ~~~
