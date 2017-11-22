@@ -48,9 +48,9 @@ Though it is impossible to reconcile all Django APIs, QuickView code has made pr
 
 Screenshots
 -----------
-.. figure:: https://raw.githubusercontent.com/rcrowther/quickviews/master/text/images/objectview.png
+.. figure:: https://raw.githubusercontent.com/rcrowther/quickviews/master/text/images/detailview.png
    :width: 100
-   :alt: objectview screenshot
+   :alt: detailview screenshot
    :align: center
 
    One line in a url.py file
