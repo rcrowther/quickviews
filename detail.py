@@ -5,7 +5,7 @@ from contextlib import suppress
 from django.core.exceptions import ImproperlyConfigured
 from django.http import Http404
 from django.utils.translation import gettext as _
-from django.forms.widgets import Media, MediaDefiningClass
+from django.forms.widgets import Media
 from django.utils.html import format_html, mark_safe
 from django.views.generic import TemplateView
 from django.views.generic.base import ContextMixin
@@ -292,7 +292,7 @@ class DetailBuilderView(DetailBuilder, SingleObjectContextMixin, TemplateView):
         
     class Media:
       css = {
-          'all': ('quickviews/css/list.css',)
+          'all': ('quickviews/css/base.css', 'quickviews/css/list.css',)
           }
 
 
@@ -381,5 +381,5 @@ class ModelDetailBuilderView(ModelDetailBuilder, SingleObjectContextMixin, Templ
         
     class Media:
         css = {
-            'all': ('quickviews/css/list.css',)
+            'all': ('quickviews/css/base.css', 'quickviews/css/list.css',)
             }

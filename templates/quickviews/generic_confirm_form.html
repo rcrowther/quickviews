@@ -3,7 +3,6 @@
 {% block html_title %} {{ title|striptags }} {% endblock %}
 
 {% block title %} {{ title }} {% endblock %}
-
 {% block content %}
   <form  id="deleteconfirm-form" action="{{ submit_url }}" method="post">
     {% csrf_token %}

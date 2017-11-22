@@ -23,7 +23,7 @@ To remove the context data added for the default templates, set, ::
     
 If you do this on a form view, all the action bttons will vanish. They can be replaced by following the next steps.
 
-To add buttons? To add a 'Cancel' button to a 'delete' form is user-friendly. This illustrates how to override get_context_data() for the Simple View templates. Add this to a delete form view, ::
+To add buttons? To add a 'Cancel' button to a 'delete' form is user-friendly. This example illustrates how to append to the context using get_context_data(). Add this, ::
 
     from quickviews import views, inline_templates
 
@@ -31,13 +31,14 @@ To add buttons? To add a 'Cancel' button to a 'delete' form is user-friendly. Th
         ...
         
         def get_context_data(self, **kwargs):
-            # Run the super first. It adds 'view', 'form' and other context attributes
+            # Run the super first. It adds 'view', 'form' and other
+            # context attributes
             ctx = super().get_context_data(**kwargs)
             # 'actions' is rendered into the action bar.
             ctx['actions'].append(
-                  # inline templates makes links and submit HTML.
-                  # The URL parameter is from view code, but you could hardcode,
-                  # use a reverse() etc.
+                  # inline_templates makes links and submit HTML.
+                  # The URL parameter is from a method built in to the view,
+                  # but you could hardcode, use a reverse() etc.
                   inline_templates.link(
                   "No, take me back",
                   ctx['view'].get_admin_base_url(),
@@ -49,14 +50,31 @@ To add buttons? To add a 'Cancel' button to a 'delete' form is user-friendly. Th
 
 Change CSS (and Javascript)
 -----------------------------
-You'd like the view to be styled in another way, or would like/need Javascript additions.
+You'd like the view to be styled in another way, or would like/need Javascript additions. 
 
-All QuickViews implement Django's MediaMixin. So to provide your own CSS, override, ::
+This is done with a Django-like API (in QuickViews, consistently applied). All QuickViews implement Django's MediaMixin. To add your own CSS, ::
 
+    class BBView(ModelDetailBuilderView):
+        ...
+        
+        class Media:
+            css = {
+                'all': ('site/pretty.css',)
+            }
+        
+The view will look for 'site/static/site/pretty.css'. If you wish to remove the default CSS, set 'extend' to False, ::
 
-To add to the current CSS, ::
-
-
+    class BBView(ModelDetailBuilderView):
+        ...
+        
+        class Media:
+            extend = False
+            css = {
+                'all': ('site/pretty.css',)
+            }
+        
+        
+        
 Change the base template
 --------------------------
 

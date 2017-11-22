@@ -5,7 +5,7 @@ from collections import OrderedDict
 from contextlib import suppress
 from django.http import Http404
 from django.utils.translation import gettext as _
-from django.forms.widgets import Media, MediaDefiningClass
+from django.forms.widgets import Media
 from django.utils.html import format_html, mark_safe
 from django.views.generic import TemplateView
 
@@ -433,7 +433,7 @@ class ListBuilderView(ListBuilder, TemplateView):
 
     class Media:
         css = {
-            'all': ('quickviews/css/table.css',)
+            'all': ('quickviews/css/base.css', 'quickviews/css/table.css',)
             }
         
         
@@ -566,5 +566,5 @@ class ModelListBuilderView(ModelListBuilder, TemplateView):
 
     class Media:
         css = {
-            'all': ('quickviews/css/table.css',)
+            'all': ('quickviews/css/base.css', 'quickviews/css/table.css',)
             }

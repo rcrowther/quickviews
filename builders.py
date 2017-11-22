@@ -1,5 +1,5 @@
 from collections import OrderedDict
-from django.forms.widgets import Media, MediaDefiningClass
+from django.forms.widgets import MediaDefiningClass
 
 from .cell_renderers import CellRenderer
 

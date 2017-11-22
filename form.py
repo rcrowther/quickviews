@@ -4,27 +4,10 @@ from django.http import HttpResponseRedirect
 
 from .inline_templates import *
 
-
-
-# + steps
-# before_action
-# fail_action
-# unbound_action
-# success_redirect_url
-# + want
-# customisable before, save
-# + also
-# template
-# page_title
-# confirm_message
-# succeed_message
-# fail_message
-# model
-# object_title_field
-
 from django.views import generic
 from django.forms import models as model_forms
 from django.core.exceptions import ImproperlyConfigured
+from django.forms.widgets import Media, MediaDefiningClass
 
 from .detail import (
     SingleObjectMixin,
@@ -35,7 +18,19 @@ from .detail import (
     
 #! transactions
 #? the context here is layered. How can we drop admin context, but keep
-# the rest? add_default_context? is it worth doing?
+#? There is an issue with media. The detail and list builders inherit 
+# MediaDefiningClass and are directly inherited into the views, so
+# function as expected for media.
+# Django's form views do not work like this. They keep the builder 
+# separate so it can do the as_p() etc. trick. The code below follows
+# this. But how to give media on the view? Inheritance of View code,
+# which MediaDefiningClass would enable, is alarming when the builder is
+# separate - data can come from two places (view and builder). Providing
+# the property only has issues, it means the collection of media from 
+# the form could be overriden if a super() is not called (Django code
+# avoids this by metaclass)
+# Current solution, provide an empty property only and assemble in 
+# the context.
 # + modified with 
 # querysets replaced with simple get_object()
 # success_action/fail_action hooks
@@ -45,7 +40,7 @@ from .detail import (
 # default templates
 # stock contexts
 
-class GetView(generic.base.TemplateView):
+class GetView(generic.base.TemplateView, metaclass=MediaDefiningClass):
     '''
     A View that only accepts GET method requests.
     In Django, this can be done with a few lines of code. But this view
@@ -162,9 +157,15 @@ class GetView(generic.base.TemplateView):
             'actions': [
               submit_action("Save", attrs={'class':'"button primary"'}),
             ],
-            })                  
+            })
+        kwargs['media'] = self.media + kwargs['form'].media
         return super().get_context_data(**kwargs)
         
+    class Media:
+        css = {
+            'all': ('quickviews/css/base.css',)
+            }  
+
 
 
 class SuccessFailMixin:
@@ -198,7 +199,7 @@ class SuccessFailMixin:
 
 
 
-class FormMixin(generic.base.ContextMixin, SuccessFailMixin):
+class FormMixin(generic.base.ContextMixin, SuccessFailMixin, metaclass=MediaDefiningClass):
     """
     Show and handle a form in a request.
     (only useful for create/update)
@@ -262,11 +263,12 @@ class FormMixin(generic.base.ContextMixin, SuccessFailMixin):
         """If the form is invalid, hook then render the invalid form."""
         self.fail_action(form)
         return self.render_to_response(self.get_context_data(form=form))
-
+        
     def get_context_data(self, **kwargs):
         """Insert the form into the context dict."""
         if 'form' not in kwargs:
             kwargs['form'] = self.get_form()
+        kwargs['media'] = self.media + kwargs['form'].media
         return super().get_context_data(**kwargs)
 
 
@@ -381,7 +383,7 @@ class BaseCreateView(ProcessFormView, generic.detail.SingleObjectTemplateRespons
         
         
 
-class CreateView(FormMixin, BaseCreateView):
+class CreateView(DataFormMixin, BaseCreateView):
     display_title = 'Create {0}'
     success_message = "Created {0}"
     
@@ -396,6 +398,11 @@ class CreateView(FormMixin, BaseCreateView):
         if (group_name):
             kwargs['title'] = self.display_title.format(group_name)
         return super().get_context_data(**kwargs)
+
+    class Media:
+        css = {
+            'all': ('quickviews/css/base.css',)
+            }        
         
         
 
@@ -405,6 +412,7 @@ class ModelCreateView(ModelFormMixin, BaseCreateView):
     
     def get_context_data(self, **kwargs):
         kwargs.update({
+        #'media' : self.media,
         'navigators': [],
         'actions': [
           submit_action("Save", attrs={'class':'"button primary"'}, right_align=True),
@@ -414,6 +422,12 @@ class ModelCreateView(ModelFormMixin, BaseCreateView):
         if (group_name):
             kwargs['title'] = self.display_title.format(group_name)
         return super().get_context_data(**kwargs)
+
+    class Media:
+        css = {
+            'all': ('quickviews/css/base.css',)
+            }
+
 
 
 #####################################
@@ -434,7 +448,8 @@ class BaseUpdateView(ProcessFormView, generic.detail.SingleObjectTemplateRespons
         return super().post(request, *args, **kwargs)
         
 
-class UpdateView(FormMixin, BaseUpdateView):
+
+class UpdateView(DataFormMixin, BaseUpdateView):
     """View for updating by any form, with a response rendered by a template."""
     display_title = 'Update {0}'
     success_message = "Updated {0}"
@@ -452,7 +467,12 @@ class UpdateView(FormMixin, BaseUpdateView):
             kwargs['title'] = self.display_title.format(group_name)
         return super().get_context_data(**kwargs)
       
-      
+    class Media:
+        css = {
+            'all': ('quickviews/css/base.css',)
+            } 
+            
+                  
       
 class ModelUpdateView(ModelFormMixin, BaseUpdateView):
     """View for updating a model object, with a response rendered by a template."""
@@ -472,7 +492,12 @@ class ModelUpdateView(ModelFormMixin, BaseUpdateView):
             kwargs['title'] = self.display_title.format(group_name)
         return super().get_context_data(**kwargs)
         
-        
+    class Media:
+        css = {
+            'all': ('quickviews/css/base.css',)
+            } 
+            
+            
       
 ###################################################
 ## confirm
@@ -520,9 +545,9 @@ class BaseConfirmView(ProcessConfirmView, generic.detail.SingleObjectTemplateRes
         self.object = self.get_object()
         return super().post(request, *args, **kwargs)
 
+        
                 
-                
-class ConfirmView(SingleObjectContextMixin, BaseConfirmView):
+class ConfirmView(SingleObjectContextMixin, BaseConfirmView, metaclass=MediaDefiningClass):
     display_title = 'Are you sure?'
     success_message = "Modified {0}"
 
@@ -537,14 +562,20 @@ class ConfirmView(SingleObjectContextMixin, BaseConfirmView):
                   attrs={'class':'"button alert"'}
               ),
           ]})
+        kwargs['media'] = self.media
         group_name = self.get_object_model_name()
         if (group_name):
             kwargs['title'] = self.display_title.format(group_name)
         return super().get_context_data(**kwargs)
         
-           
+    class Media:
+        css = {
+            'all': ('quickviews/css/base.css',)
+            } 
 
-class ModelConfirmView(SingleModelObjectContextMixin, BaseConfirmView):
+
+
+class ModelConfirmView(SingleModelObjectContextMixin, BaseConfirmView, metaclass=MediaDefiningClass):
     display_title = 'Are you sure?'
     success_message = "Modified {0}"
     
@@ -559,12 +590,18 @@ class ModelConfirmView(SingleModelObjectContextMixin, BaseConfirmView):
                   attrs={'class':'"button alert"'}
               ),
           ]})
+        kwargs['media'] = self.media
         group_name = self.get_object_model_name()
         if (group_name):
             kwargs['title'] = self.display_title.format(group_name)
         return super().get_context_data(**kwargs)
-       
 
+    class Media:
+        css = {
+            'all': ('quickviews/css/base.css',)
+            }        
+
+ 
  
 class ModelDeleteView(ModelConfirmView):
     """

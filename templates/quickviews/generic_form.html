@@ -4,15 +4,6 @@
 {% block html_title %} {{ title|striptags }} {% endblock %}
 
 {% block title %} {{ title }} {% endblock %}
-
-{% block head_tags %}
-<!--
-<script type="text/javascript" src="/static/admin/js/vendor/jquery/jquery.js"></script>
-<script type="text/javascript" src="/static/admin/js/urlify.js"></script>
-<script type="text/javascript" src="/static/quickviews/js/sluginput.js"></script>
--->
-{% endblock %}
-
 {% block content %}
   <form id="generic-form" action="{{ submit_url }}" method="post">
     {% csrf_token %}

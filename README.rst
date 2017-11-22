@@ -80,11 +80,14 @@ Quickviews needs no other setup.
 
 Hints
 ~~~~~
-An approach to the API is emerging:
+Some approaches to the API are emerging:
 
 Django's sometimes variable approach to setting parameters has been clarified. All parameters are available as attributes on a View class, for overriding by sub-classing. A set of parameters is included in some __init__()s, mainly for the standalone use in URLs and by builders.
 
-The builders have render methods. These are named as_table() etc. for substancial variations. The __str__() method returns a default render method (Django's Form class uses this approach). The auto-generating Views inherit these builders directly. If extensive or detailed or dedicated customisation is needed, the Views can be subclassed. But, if not, build parameters can be set on URL construction. e.g. ::
+The builders have render methods. These are named as_table() etc. for substancial variations. The __str__() method returns a default render method (Django's Form class uses this approach). The auto-generating Views inherit these builders directly. If extensive, detailed, or dedicated customisation is needed, the Views can be subclassed. But, if not, build parameters can be set on URL construction.
+
+Django provides an inheritable/overridable Media_ class class/attribute/metaclass for handling CSS and JS. It can be found in widgets and forms. This has been enabled on every view in QuickViews. Which makes appending and substituting other CSS and JS easy. Also, all default CSS and JS is delivered this way. So, if you want, you can override to raw HTML.
+
  
 
 Use
@@ -102,3 +105,6 @@ list views and paginators
 
 detail views
     Same as ListBuilder but for single instances of models or dicts. Contains a DetailBuilder which works from a Django database query or dict. And defaulted views.
+
+
+.. _Media: https://docs.djangoproject.com/en/1.11/topics/forms/media/

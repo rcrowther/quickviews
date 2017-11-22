@@ -7,7 +7,6 @@
     <title>{% block html_title %}{% endblock %}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{% static '/quickviews/css/base.css' %}">
     {% block head_tags %}{% endblock %}
     {{ media }}
   </head>
@@ -40,5 +39,12 @@
     {% block footer %}{% endblock %}
     </footer>
     </article>
+
+    {% if aside %}    
+    <aside>
+      {{ aside }}
+    </aside>
+    {% endif %}
+
   </body>
 </html>
