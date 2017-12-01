@@ -1,7 +1,7 @@
 import datetime
 
 #from django.utils.html import format_html, mark_safe
-from django.utils.html import escape
+from django.utils.html import conditional_escape
 from django.forms.widgets import MediaDefiningClass
 from django.core.exceptions import ImproperlyConfigured
 
@@ -88,7 +88,7 @@ class CellRenderer(metaclass=MediaDefiningClass):
         return value
     
     def as_html(self, value, data):
-        v = escape(value)
+        v = conditional_escape(value)
         o = self.value_as_html(v)
         if (self.link):
             url = self.get_link(value, data)

@@ -17,7 +17,7 @@ from .detail import (
     )
     
 #! transactions
-#? the context here is layered. How can we drop admin context, but keep
+#? the context here is layered. How can we drop admin context?
 #? There is an issue with media. The detail and list builders inherit 
 # MediaDefiningClass and are directly inherited into the views, so
 # function as expected for media.
@@ -29,7 +29,7 @@ from .detail import (
 # the property only has issues, it means the collection of media from 
 # the form could be overriden if a super() is not called (Django code
 # avoids this by metaclass)
-# Current solution, provide an empty property only and assemble in 
+# Current solution, use MediaDefiningClass anyhow and assemble in 
 # the context.
 # + modified with 
 # querysets replaced with simple get_object()

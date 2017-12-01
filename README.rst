@@ -31,17 +31,17 @@ See documentation in the detailed READMEs.
 Main features
 -------------
 
-- Consistent API
-Across detail, list, and form view implementations.
+Consistent API
+    Across detail, list, and form view implementations.
 
-- Reasonably exhaustive API
-Non-Model and Model versions of most views, etc.
+Reasonably exhaustive API
+    Non-Model and Model versions of most views, etc.
 
-- Default rendering
-All views render immediately through default templates and CSS.
+Default rendering
+    All views render immediately through default templates and CSS.
 
-- Close to Django
-Though it is impossible to reconcile all Django APIs, QuickView code has made progress. 
+Close to Django
+    Though it is impossible to reconcile all Django APIs, QuickView code has made progress. 
 
 
 

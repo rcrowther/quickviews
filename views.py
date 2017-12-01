@@ -17,7 +17,6 @@ from django.urls import reverse
 #! novalidate https://docs.djangoproject.com/en/1.11/topics/forms/
 #! contexts https://docs.djangoproject.com/en/1.11/ref/forms/renderers/#built-in-template-form-renderers
 #! ModelGETRead
-#! ModelForm
 #! stop using generic model names in exceptions, derive them
 #! csrf
 #! get rid of self object, use the method and local only?
@@ -25,6 +24,7 @@ from django.urls import reverse
 #! use the file pk, not an auto-generated one.
 #! need this, if all context going through ok,
 #! <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.model_name }}_form" novalidate>{% csrf_token %}{% block form_top %}{% endblock %}
+#? cellrenderer for Markdown
 
 #??? taxonomy
 #??? then sort out Files, finally.
