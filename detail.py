@@ -303,7 +303,7 @@ class DetailBuilder(DetailBase, metaclass=DeclarativeFieldsMetaclass):
 
 
 
-class DetailBuilderView(DetailBuilder, SingleObjectContextMixin, TemplateView):
+class DetailView(DetailBuilder, SingleObjectContextMixin, TemplateView):
     template_name = 'quickviews/generic_page.html'
 
     def get_context_data(self, **kwargs):
@@ -388,7 +388,7 @@ class ModelDetailBuilder(ModelDetailBase, metaclass=DeclarativeFieldsMetaclass):
 
 
 
-class ModelDetailBuilderView(ModelDetailBuilder, SingleObjectContextMixin, TemplateView):
+class ModelDetailView(ModelDetailBuilder, SingleObjectContextMixin, TemplateView):
     template_name = 'quickviews/generic_page.html'
 
     def get_context_data(self, **kwargs):

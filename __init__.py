@@ -8,11 +8,11 @@ from .form import (
 )
 
 from .list import (
-    ListBuilder, ListBuilderView, ModelListBuilder, ModelListBuilderView
+    ListBuilder, ListView, ModelListBuilder, ModelListView
 )
 
 from .detail import (
-    DetailBuilder, DetailBuilderView, ModelDetailBuilder, ModelDetailBuilderView
+    DetailBuilder, DetailView, ModelDetailBuilder, ModelDetailView
 )
 
 from .cell_renderers import (

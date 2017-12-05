@@ -416,7 +416,7 @@ class ListBuilder(ListBase, metaclass=DeclarativeFieldsMetaclass):
 
 
 
-class ListBuilderView(ListBuilder, TemplateView):
+class ListView(ListBuilder, TemplateView):
     template_name = 'quickviews/generic_page.html'
 
     def get_context_data(self, **kwargs):
@@ -544,7 +544,7 @@ class ModelListBuilder(ModelListBase, metaclass=DeclarativeFieldsMetaclass):
 
 
 
-class ModelListBuilderView(ModelListBuilder, TemplateView):
+class ModelListView(ModelListBuilder, TemplateView):
     template_name = 'quickviews/generic_page.html'
     rows_per_page = 25
         
