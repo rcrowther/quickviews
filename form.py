@@ -130,7 +130,7 @@ class GetView(generic.base.TemplateView, metaclass=MediaDefiningClass):
             # success_url may be lazy
             url = str(self.success_url)
         else:
-            url = get_return_url()
+            url = return_url()
         return url 
 
     def before_render_action(self, context):
@@ -222,6 +222,10 @@ class FormMixin(generic.base.ContextMixin, SuccessFailMixin, metaclass=MediaDefi
         """Return the form class to use."""
         return self.form_class
 
+    def has_file_field(self):
+        #self.form_class
+        return True
+        
     def get_form(self, form_class=None):
         """Return an instance of the form to be used in this view."""
         if form_class is None:
@@ -236,13 +240,15 @@ class FormMixin(generic.base.ContextMixin, SuccessFailMixin, metaclass=MediaDefi
         }
 
         if self.request.method in ('POST', 'PUT'):
+            print('get_form_kwargs')
+            print(str(self.request.FILES))
             kwargs.update({
                 'data': self.request.POST,
                 'files': self.request.FILES,
             })
         return kwargs
 
-    def get_return_url(self):
+    def return_url(self):
         return self.request.get_full_path()
         
     def get_success_url(self):
@@ -263,23 +269,42 @@ class FormMixin(generic.base.ContextMixin, SuccessFailMixin, metaclass=MediaDefi
         """If the form is invalid, hook then render the invalid form."""
         self.fail_action(form)
         return self.render_to_response(self.get_context_data(form=form))
-        
+    
     def get_context_data(self, **kwargs):
         """Insert the form into the context dict."""
         if 'form' not in kwargs:
             kwargs['form'] = self.get_form()
-        kwargs['media'] = self.media + kwargs['form'].media
+        kwargs['media'] = self.media + kwargs['form'].media        
         return super().get_context_data(**kwargs)
 
 
 
 class DataFormMixin(FormMixin, SingleObjectContextMixin):
+    display_title = '{0}'
+
     def get_form_kwargs(self):
         """Return the keyword arguments for instantiating the form."""
         kwargs = super().get_form_kwargs()
-        if hasattr(self, 'object'):
+        if (hasattr(self, 'object') and (self.object)):
             kwargs.update({'instance': self.object})
         return kwargs
+        
+    def get_success_url(self):
+        """Return the URL to redirect to after processing a valid form."""
+        if self.success_url:
+            # success_url may be lazy
+            url = str(self.success_url)
+        else:
+            url = self.return_url()
+        return url 
+        
+    def get_context_data(self, **kwargs):
+        """Insert the form into the context dict."""
+        display_name = self.get_display_name(self.object)
+        if (not display_name):
+            display_name = ''
+        kwargs['title'] = self.display_title.format(display_name)
+        return super().get_context_data(**kwargs)
         
         
         
@@ -394,9 +419,6 @@ class CreateView(DataFormMixin, BaseCreateView):
           submit_action("Save", attrs={'class':'"button primary"'}, right_align=True),
         ],
         })
-        group_name = self.get_object_model_name()
-        if (group_name):
-            kwargs['title'] = self.display_title.format(group_name)
         return super().get_context_data(**kwargs)
 
     class Media:
@@ -418,9 +440,6 @@ class ModelCreateView(ModelFormMixin, BaseCreateView):
           submit_action("Save", attrs={'class':'"button primary"'}, right_align=True),
         ],
         })
-        group_name = self.get_object_model_name()
-        if (group_name):
-            kwargs['title'] = self.display_title.format(group_name)
         return super().get_context_data(**kwargs)
 
     class Media:
@@ -462,9 +481,6 @@ class UpdateView(DataFormMixin, BaseUpdateView):
           submit_action("Update", attrs={'class':'"button primary"'}, right_align=True),
         ],
         })
-        group_name = self.get_object_model_name()
-        if (group_name):
-            kwargs['title'] = self.display_title.format(group_name)
         return super().get_context_data(**kwargs)
       
     class Media:
@@ -487,9 +503,6 @@ class ModelUpdateView(ModelFormMixin, BaseUpdateView):
           submit_action("Update", attrs={'class':'"button primary"'}, right_align=True),
         ],
         })
-        group_name = self.get_object_model_name()
-        if (group_name):
-            kwargs['title'] = self.display_title.format(group_name)
         return super().get_context_data(**kwargs)
         
     class Media:

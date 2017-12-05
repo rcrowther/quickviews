@@ -27,7 +27,11 @@ class SingleObjectMixin():
     object_name_field_key = None
       
     def get_object_name(self, object):
-        """Get the name to use for an object."""
+        """
+        Get the name to use for an object.
+        Takes object paramater in case obj is updated by a form.
+        @return a name, or None
+        """
         object_name = None
         #if (not(self.object_name_field_key)):
             #raise ImproperlyConfigured(
@@ -42,7 +46,10 @@ class SingleObjectMixin():
         return object_name
 
     def get_object_model_name(self):
-        """Get the group name to use for the object."""
+        """
+        Get the group name to use for the object.
+        @return a name, or None
+        """
         return self.object_model_name
 
     def get_display_name(self, object):
@@ -54,7 +61,20 @@ class SingleObjectMixin():
         if (not name):
             name = self.get_object_model_name()
         return name
-        
+
+    def get_id_name(self):
+        """
+        Concatenate with underscore the group and object names.
+        @return a name, or None
+        """
+        name = self.get_object_name(self.object)
+        group_name = self.get_object_model_name()
+        if (name):
+            name = group_name + '_' + name
+        else:
+            name = group_name
+        return name
+                
     def get_object(self):
         """
         Return the data used to render.
@@ -79,12 +99,18 @@ class SingleObjectContextMixin(ContextMixin, SingleObjectMixin):
         """Insert the data into the context dict."""
         if self.object:
             kwargs['object'] = self.object
-            object_name = self.get_object_name(self.object)
-            if object_name:
-                kwargs['object_name'] = object_name
-            object_model_name = self.get_object_model_name()
-            if object_model_name:
-                kwargs['object_model_name'] = object_model_name
+            #object_name = self.get_object_name(self.object)
+            #if object_name:
+            #    kwargs['object_name'] = object_name
+            #object_model_name = self.get_object_model_name()
+            #if object_model_name:
+            #    kwargs['object_model_name'] = object_model_name
+            display_name = self.get_display_name(self.object)
+            if (display_name):
+                kwargs['display_name'] = display_name
+            id_name = self.get_id_name()
+            if (id_name):
+                kwargs['id_name'] = id_name
         return super().get_context_data(**kwargs)
 
 
@@ -285,9 +311,6 @@ class DetailBuilderView(DetailBuilder, SingleObjectContextMixin, TemplateView):
         'content' : self.as_list(),
         'media' : self.media
         })
-        display_name = self.get_display_name(self.object)
-        if (display_name):
-            kwargs['title'] = display_name
         return super().get_context_data(**kwargs)
         
     class Media:
@@ -374,9 +397,6 @@ class ModelDetailBuilderView(ModelDetailBuilder, SingleObjectContextMixin, Templ
         'content' : self.as_list(),
         'media' : self.media
         })
-        display_name = self.get_display_name(self.object)
-        if (display_name):
-            kwargs['title'] = display_name
         return super().get_context_data(**kwargs)
         
     class Media:
