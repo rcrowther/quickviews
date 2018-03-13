@@ -81,3 +81,24 @@ Change the base template
 
 Change templates
 -----------------
+Remember you can change the presentation of a single item using a CellRenderer override. And presentation of a page using CSS anf Javascript.
+
+The DetailView will deliver a context something like, ::
+
+{
+'review_pk': <IDfield value>, 
+'object': <For ModelViews, a database object, or some data being viewed>, 
+'id_name': <<model name>_<title field value>>, 
+'view' : <the View object>
+'display_name': <title field value>, 
+'content':  <object rendered as HTML list>,
+'media': <media class printing as media files>
+}
+
+So you can add touches of data here. Then duplicate the QuickViews generic templates into your app, revise the 'template' attribute path, and render.
+
+If you want to go further than this, you are stepping to the edge of QuickViews. Remember, one of the main aims is a generic view of the data. If you destroy the generic view, then a lot of useless render code will be run for each view.
+
+There are several scenarios where this may be the case. The main one is that, for better or worse, your database data does not represent what you think a user should see. Perhaps a great table of data needs breaking up for nice presentation in several parts. For display on different URLs, this can be done by field using the 'use_fields' attribute. But this will not work for display on one page. The other variation, displaying substancial data from several database tables on one page, can not be handled very well by QuickViews. Of course, the extra code could be injected into get_context(), but this is mutating the use of QuickViews, which is not generally a good idea.
+
+Other things QuickViews can not do are deliver JSON form a URL, and similar web activity.

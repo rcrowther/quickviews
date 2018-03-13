@@ -41,7 +41,7 @@ If the forms fail or succeed, hook methods let you do something else without rew
 - messages
 I like messages. That's the only excuse.
 
-- absolute_url() return_url() methods
+- absolute_url()/return_url() methods
 If you can find them, they are there.
 
 - default templates
@@ -85,7 +85,7 @@ output_title
     Or 'display_title'. For the template.     
 
 success_action()
-    Should return an object (both messages and redirects depend on that).
+    Should return a message. This is run through a simple template that adds the words 'Create', or similar.
     
 The code contains several other tweaks, but these are the big differences. Form handling is unchanged from Django.
 
@@ -95,7 +95,7 @@ Model-based views
 model
     Required. A Model class
     
-object_title_field
+object_name_field_key
     Fills the name of of the object in messages and templates e.g. 'Deleted "quartz"'. The default uses the generic modelname e.g. 'Deleted Pebble'.
 
 get_absolute_url()
@@ -143,7 +143,7 @@ Or provide a custom form, but lean on the default success method for Model-based
             
 ModelDelete
 +++++++++++
-Deleting, we always need a delete, ::
+Delete. We always need a delete, ::
 
     from quickviews import views
 

@@ -1,4 +1,5 @@
-#! Shorten ModelDetailBuilderView etc.
+#! make (non-model) Create message more flexible
+#! Add permission attributes
 #? form_url, not submit_url
 #? Muddle over titling. Forms are, lists and details are not
 #? should titling be overridable, not simply formattable?

@@ -1,8 +1,8 @@
 QuickViews
 ============
-It was like this in the old days. When you had food and had to walk to the shops. Views with poor configuration and you can take the code in with a glance. But the same class-based API as modern Views.
+It was like this in the old days. When you had food and needed to walk to the shops. Views with poor configuration and you can take the code in with a glance. But the same class-based API as modern Views.
 
-QuickViews contains views for rendering forms, lists, and models. All views have default rendering through stock templates  and CSS.
+QuickViews contains views for rendering forms, lists, and models. All views have default rendering through stock templates and CSS (yes, that's right, default rendering, like an admin view).
 
 
 When to use this application
@@ -26,7 +26,9 @@ Not the Django stack. Not mature, so likely to change.
 Alternatives
 ------------
 See documentation in the detailed READMEs.
-
+django-tables?
+Generic scaffold,
+    https://github.com/spapas/django-generic-scaffold auto-generates user-viewable CRUD forms. More extensive and less deep than quickviews, Generic Scaffold allows batch creation of list/create/update and formviews.
 
 Main features
 -------------

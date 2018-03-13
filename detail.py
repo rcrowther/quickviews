@@ -33,11 +33,6 @@ class SingleObjectMixin():
         @return a name, or None
         """
         object_name = None
-        #if (not(self.object_name_field_key)):
-            #raise ImproperlyConfigured(
-                #"%(cls)s needs an 'object_name_field_key' attribute" % {
-                    #'cls': self.__class__.__name__
-                #}))
         if (object and self.object_name_field_key):
             if (isinstance(object, dict)):
                 object_name = object[self.object_name_field_key]
@@ -123,6 +118,20 @@ class SingleModelObjectMixin(SingleObjectMixin):
     model = None
     url_pk_arg = None
 
+    def get_object_name(self, object):
+        """
+        Get the name to use for an object.
+        Takes object paramater in case obj is updated by a form.
+        @return a name, or None
+        """
+        # Ask model forms to always have a key 
+        if (not(self.object_name_field_key)):
+            raise ImproperlyConfigured(
+                "%(cls)s needs an 'object_name_field_key' attribute" % {
+                    'cls': self.__class__.__name__
+                })
+        return super().get_object_name(object)
+        
     def verify_can_try_query(self):
           if (not(self.model and self.url_pk_arg)):
               raise ImproperlyConfigured(
@@ -150,13 +159,13 @@ class SingleModelObjectMixin(SingleObjectMixin):
       else:
           # if we have no self.object, use the other args to get data
           self.verify_can_try_query()
-          qs = self.model._default_manager.all()
+          #qs = self.model._default_manager.all()
           pk = self.kwargs.get(self.url_pk_arg)
           try:
-              obj = qs.get(pk=pk)
+              obj = self.model._default_manager.get(pk=pk)
           except self.model.DoesNotExist:
               raise Http404(_("No %(verbose_name)s found matching the query") %
-                          {'verbose_name': qs.model._meta.verbose_name})
+                          {'verbose_name': self.model._meta.verbose_name})
       return obj
 
 

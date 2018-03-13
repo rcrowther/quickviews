@@ -10,9 +10,9 @@ from django.core.exceptions import ImproperlyConfigured
 from django.forms.widgets import Media, MediaDefiningClass
 
 from .detail import (
-    SingleObjectMixin,
+    #SingleObjectMixin,
     SingleObjectContextMixin, 
-    SingleModelObjectMixin, 
+    #SingleModelObjectMixin, 
     SingleModelObjectContextMixin
     )
     
@@ -176,16 +176,19 @@ class SuccessFailMixin:
     def success_action(self, form):
         '''
         Hook for success.
-        @return (usually modified) data
+        #@return (usually modified) data
+        @return message to display
         '''
-        raise ImproperlyConfigured('FormView must be configured with a success_action() method')
-
+        #raise ImproperlyConfigured('FormView succeded. Handling can be configured with a success_action() method')
+        pass
+        
     def fail_action(self, form):
         '''
         Hook for failure.
         '''
-        raise ImproperlyConfigured('FormView must be configured with a fail_action() method')
-
+        #raise ImproperlyConfigured('FormView failed. Handling can be configured with a fail_action() method')
+        pass
+        
     def get_success_url(self):
         """Return the URL to redirect to after processing a valid form."""
             #? need to adapt.... 
@@ -240,8 +243,6 @@ class FormMixin(generic.base.ContextMixin, SuccessFailMixin, metaclass=MediaDefi
         }
 
         if self.request.method in ('POST', 'PUT'):
-            print('get_form_kwargs')
-            print(str(self.request.FILES))
             kwargs.update({
                 'data': self.request.POST,
                 'files': self.request.FILES,
@@ -259,9 +260,11 @@ class FormMixin(generic.base.ContextMixin, SuccessFailMixin, metaclass=MediaDefi
 
     def form_valid(self, form):
         """If the form is valid, hook then redirect to the supplied URL."""
-        self.object = self.success_action(form)
+        #self.object = self.success_action(form)
+        msg_detail = self.success_action(form)
         # messages
-        msg = self.success_message.format(self.get_display_name(self.object))
+        #msg = self.success_message.format(self.get_display_name(self.object))
+        msg = self.success_message.format(msg_detail)
         messages.add_message(self.request, messages.SUCCESS, msg)
         return HttpResponseRedirect(self.get_success_url())
         
@@ -278,7 +281,10 @@ class FormMixin(generic.base.ContextMixin, SuccessFailMixin, metaclass=MediaDefi
         return super().get_context_data(**kwargs)
 
 
-
+# NB: The SingleObjectContextMixin is mainly about supplying names for 
+# an object, and pushing that data into a context.
+# This gear may not be used at all, but is there if, for example, static
+# data is used.
 class DataFormMixin(FormMixin, SingleObjectContextMixin):
     display_title = '{0}'
 
@@ -360,9 +366,11 @@ class ModelFormMixin(DataFormMixin, SingleModelObjectContextMixin):
         return url
 
     def success_action(self, form):
-        obj = form.save()
-        return obj
-             
+        # put the new object back, in case anything wants to use it
+        self.object = form.save()
+        #return obj
+        # auto-create the message
+        return self.get_display_name(self.object)
 
 
 class ProcessFormView(generic.View):
@@ -530,9 +538,11 @@ class ProcessConfirmView(SuccessFailMixin, generic.View):
         """
         Handle POST requests: run a sucess action, message, then redirect.
         """
-        self.object = self.success_action(None)
+        #self.object = self.success_action(None)
+        msg_detail = self.success_action(None)
         # messages
-        msg = self.success_message.format(self.get_object_name(self.object))
+        #msg = self.success_message.format(self.get_object_name(self.object))
+        msg = self.success_message.format(msg_detail)
         messages.add_message(self.request, messages.SUCCESS, msg)
         return HttpResponseRedirect(self.get_success_url())
 
@@ -627,7 +637,8 @@ class ModelDeleteView(ModelConfirmView):
     confirm_message = "<p>Are you sure you want to delete the {0} '{1}'?</p>"
 
     def success_action(self, form):
-        # form.delete() returns a tuple (total, object) ...avoid
+        # form.delete() returns a tuple (total, {object: count}) ...avoid
         self.object.delete()
-        return self.object
-        
+        #return self.object
+        return self.get_display_name(self.object)
+
