@@ -79,11 +79,11 @@ class SingleObjectMixin():
         """
         if self.object is None:
             raise ImproperlyConfigured(
-                "%(cls)s is missing an 'object' attribute. Define "
-                "%(cls).object, or override "
-                "%(cls)s.get_object()." % {
-                    'cls': self.__class__.__name__
-                }
+                "{cls} is missing an 'object' attribute. Define "
+                "{cls}.object, or override "
+                "{cls}.get_object().".format(
+                    cls = self.__class__.__name__
+                )
             )
         return self.object
 
@@ -127,24 +127,24 @@ class SingleModelObjectMixin(SingleObjectMixin):
         # Ask model forms to always have a key 
         if (not(self.object_name_field_key)):
             raise ImproperlyConfigured(
-                "%(cls)s needs an 'object_name_field_key' attribute" % {
-                    'cls': self.__class__.__name__
-                })
+                "{cls} needs an 'object_name_field_key' attribute".format(
+                    cls = self.__class__.__name__
+                ))
         return super().get_object_name(object)
         
     def verify_can_try_query(self):
           if (not(self.model and self.url_pk_arg)):
               raise ImproperlyConfigured(
-                  "With no 'object' attribute, %(cls)s needs 'model' and 'url_pk_arg' attributes" % {
-                      'cls': self.__class__.__name__
-                  })
+                  "With no 'object' attribute, {cls} needs 'model' and 'url_pk_arg' attributes".format(
+                    cls = self.__class__.__name__
+                ))
                 
     def verify_object_is_from_model(self):
         if (not(isinstance(self.object, models.Model))):
             raise ImproperlyConfigured(
-                "%(cls)s.object is not a Model instance" % {
-                    'cls': self.__class__.__name__
-                })
+                "{cls}.object is not a Model instance".format(
+                    cls = self.__class__.__name__
+                ))
                 
     def get_object_model_name(self):
         """Get the group name to use for the object."""
