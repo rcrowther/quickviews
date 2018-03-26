@@ -1,6 +1,8 @@
-#! make (non-model) Create message more flexible
-#! Add permission attributes
+= Forms    
+#! transactions
 #? form_url, not submit_url
+
+== General
+#! Add permission attributes
 #? Muddle over titling. Forms are, lists and details are not
 #? should titling be overridable, not simply formattable?
-#? check could use absolute url, if present, on add and update (or not?)

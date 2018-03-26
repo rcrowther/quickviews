@@ -46,6 +46,15 @@ Close to Django
     Though it is impossible to reconcile all Django APIs, QuickView code has made progress. 
 
 
+Differs from Django Views because...
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- querysets replaced with simple get_object() method
+- success_action/fail_action hooks
+- messages
+- title handling
+- configurable return_url() or absolute_url() 
+- default templates
+- stock contexts
 
 
 Screenshots

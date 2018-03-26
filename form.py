@@ -13,31 +13,8 @@ from .detail import (
     SingleObjectContextMixin, 
     SingleModelObjectContextMixin
     )
-    
-#! transactions
-#? the context here is layered. How can we drop admin context?
-#? There is an issue with media. The detail and list builders inherit 
-# MediaDefiningClass and are directly inherited into the views, so
-# function as expected for media.
-# Django's form views do not work like this. They keep the builder 
-# separate so it can do the as_p() etc. trick. The code below follows
-# this. But how to give media on the view? Inheritance of View code,
-# which MediaDefiningClass would enable, is alarming when the builder is
-# separate - data can come from two places (view and builder). Providing
-# the property only has issues, it means the collection of media from 
-# the form could be overriden if a super() is not called (Django code
-# avoids this by metaclass)
-# Current solution, use MediaDefiningClass anyhow and assemble in 
-# the context.
-# + modified with 
-# querysets replaced with simple get_object()
-# success_action/fail_action hooks
-# messages
-# title handling
-# return_url() absolute_url() 
-# default templates
-# stock contexts
-#! but object returns are legitima5e for model versions
+
+
 
 class GetView(generic.base.TemplateView, metaclass=MediaDefiningClass):
     '''
