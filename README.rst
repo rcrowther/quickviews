@@ -26,8 +26,10 @@ Not the Django stack. Not mature, so likely to change.
 Alternatives
 ------------
 See documentation in the detailed READMEs.
+
 django-tables?
-Generic scaffold,
+
+Generic scaffold
     https://github.com/spapas/django-generic-scaffold auto-generates user-viewable CRUD forms. More extensive and less deep than quickviews, Generic Scaffold allows batch creation of list/create/update and formviews.
 
 Main features
@@ -55,7 +57,7 @@ Differs from Django Views because...
 - configurable return_url() or absolute_url() 
 - default templates
 - stock contexts
-
+- non-form rendering uses configurable cell-renderers
 
 Screenshots
 -----------
